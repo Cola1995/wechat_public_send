@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<h1>发送消息</h1>
+        <input placeholder="接受者" id="to" />
+        <input placeholder="消息内容" id="msg" />
+        <input type="button" value="发送" onclick="sendMsg();" />
+
+<h1>公众号的个数有：{{ pcount }}</h1>
+    {% for ite in  public_nickname  %}
+        <li>{{ ite }}</li>
+        {% endfor %}
+    <h1>用户列表（{{ user_list.MemberCount }}）</h1>
+    {% for user in user_list.MemberList %}
+        <div username="{{ user.UserName }}">
+            <span>{{ user.NickName }}</span>
+            <span id="data1">{{ user.UserName }}</span><span>:</span>
+             <span id="data1">{{ user.ContactFlag }}</span>
+        </div>
+    {% endfor %}
+
+ <script src="/static/jquery-1.12.4.js"></script>
+<script>
+var i=-1
+
+
+    function  sendMsg() {
+            i+=1
+            if (i=={{ pcount }})
+                alert("最后一条是否发送")
+
+            $.ajax({
+
+                url: '/send_msg.html',
+                type: "POST",
+                data: {'to': $('#to').val(), 'msg': $('#msg').val(),'index':i},
+                success:setTimeout(function (arg) {
+                    sendMsg()
+
+
+
+
+                },3000)
+            })
+        }
+
+
+</script>
+</body>
+</html>

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>个人信息</h1>
+{{ request.session.INIT_DICT.User.NickName }}
+
+<h1>最近联系人信息</h1>
+<ul>
+{% for user in request.session.INIT_DICT.ContactList %}
+<li>{{ user.UserName }}{{ user.NickName }}</li>
+
+{% endfor %}
+</ul>
+<h1>公众号信息</h1>
+{% for public in request.session.INIT_DICT.MPSubscribeMsgList %}
+<ul>{{ public.UserName }}{{ public.NickName }}{{ public.MPArticleCount }}
+
+{% for acr in public.MPArticleList %}
+    <li>{{ acr.Title }}</li><a href="{{ acr.Url }}">{{ acr.Url }}</a>
+{% endfor %}
+</ul>
+
+{% endfor %}
+
+
+<script src="/static/jquery-1.12.4.js"></script>
+
+<input placeholder="pass_ticket" id="pass_ticket" />
+<input placeholder="skey" id="skey" />
+<input placeholder="Cookie" id="Cookie" />
+<input placeholder="消息内容" id="msg" />
+<a href="/contact_list.html" onclick="lian()">更多联系人</a>
+<input type="button" value="更多联系人" onclick="lian();" />
+
+<script>
+
+
+
+    function  lian() {
+            $.ajax({
+
+                url: '/contact_list.html',
+                type: "POST",
+                data: {'pass_ticket': $('#pass_ticket').val(), 'skey': $('#skey').val(),'Cookie': $('#Cookie').val()},
+                success:function (arg) {
+
+
+
+
+
+                }
+            })
+        }
+
+
+</script>
+</body>
+</html>
